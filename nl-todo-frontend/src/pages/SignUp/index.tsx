@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import ControlledTextField from "../../components/ControlledTextField";
+import ControlledTextField from "../../components/Basics/ControlledTextField";
 import { signUpValidations } from "../../utils/form-validations";
 import {
   ContentWrapper,

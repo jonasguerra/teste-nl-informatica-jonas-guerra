@@ -1,8 +1,25 @@
-import { Button, Card, CardContent, IconButton, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow } from "@mui/material";
-import { useEffect, useState } from 'react';
-import EnhancedTableHead, { Order } from "../../../components/Basics/TableHeader";
-import { HeadCell } from '../../components/TableHeader';
-import { Task } from '../../models/task';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import {
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import EnhancedTableHead, {
+  HeadCell,
+  Order,
+} from "../../components/PagesComponents/TableHeader";
+import { Task } from "../../models/task";
+import { TasksService } from "../../services/task.service";
 import { PageContainer, PageHeader, PageTitle, TableCellFixed } from "./styles";
 
 const headCells: HeadCell[] = [
@@ -33,10 +50,10 @@ const headCells: HeadCell[] = [
   },
 ];
 
-
 const Dashboard = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
-  const [loading, setLoading] = useState<boolean>(false) 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Task>("createdAt");
   const [page, setPage] = useState(0);
@@ -47,68 +64,71 @@ const Dashboard = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  const fetchData = async () => {
+    const response = await TasksService.getTasks();
+    setTasks(response?.data);
+  };
+
   useEffect(() => {
-    setLoading(false)
-
-    
-  }, [])
-
+    fetchData();
+  }, []);
 
   return (
     <PageContainer>
       <PageHeader>
         <PageTitle>Dashboard</PageTitle>
-        <Button>Nova Nota</Button>
+        <Button variant="contained">Nova Nota</Button>
       </PageHeader>
       {!loading && (
         <Card>
           <CardContent>
-                        <TableContainer>
-                          <Table>
-                            <EnhancedTableHead
-                              headCells={headCells}
-                              order={order}
-                            />
-                            <TableBody>
-                              {taskList
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((task: Connection) => {
-                                  return (
-                                    <TableRow hover key={task.id}>
-                                      <TableCell>{task.name}</TableCell>
-                                      <TableCellFixed>
-                                        <IconButton>
-
-                                        </IconButton>
-                                          variant="text"
-                                          title="Connect domains"
-                                          color="secondary"
-                                          startIcon={<AddIcon />}
-                                        />
-                                      </TableCellFixed>
-                                    </TableRow>
-                                  );
-                                })}
-                            </TableBody>
-                          </Table>
-                          <TablePagination
-                            rowsPerPageOptions={[5, 10, 25, 50]}
-                            component="div"
-                            count={totalItems}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                          />
-                        </TableContainer>
-        </CardContent>
-      </Card>
-      </PageContainer>
+            <TableContainer>
+              <Table>
+                <EnhancedTableHead headCells={headCells} order={order} />
+                <TableBody>
+                  {tasks
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((task: Task) => {
+                      return (
+                        <TableRow hover key={task.id}>
+                          <TableCell>{task.title}</TableCell>
+                          <TableCellFixed>
+                            <IconButton>
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton>
+                              <DeleteIcon />
+                            </IconButton>
+                            <IconButton>
+                              <ArrowForwardIcon />
+                            </IconButton>
+                          </TableCellFixed>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50]}
+                component="div"
+                count={totalItems}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </TableContainer>
+          </CardContent>
+        </Card>
+      )}
+    </PageContainer>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import ControlledTextField from "../../components/ControlledTextField";
+import ControlledTextField from "../../components/Basics/ControlledTextField";
 import {
   ContentWrapper,
   FieldWrapper,

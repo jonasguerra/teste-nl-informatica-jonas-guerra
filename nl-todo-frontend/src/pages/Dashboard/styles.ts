@@ -1,7 +1,9 @@
 import { Box, Container, Grid, TableCell, Typography } from "@mui/material";
 import styled from "styled-components";
 
-export const PageContainer = styled(Container)``;
+export const PageContainer = styled(Container)`
+  padding: 2rem;
+`;
 
 export const PageHeader = styled(Box)`
   display: flex;
