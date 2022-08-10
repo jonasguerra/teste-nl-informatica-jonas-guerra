@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../middleware/axios.interceptors";
-import { responseStatus } from "../utils/constants";
 
 let showReponsesInConsole = process.env.REACT_APP_SHOW_RESPONSES_IN_CONSOLE;
 
@@ -12,7 +11,7 @@ export const AuthService = {
     let response: AxiosResponse | undefined;
     try {
       response = await axiosInstance.post(baseUrlLogin, data);
-      if (response && responseStatus.SUCCESS.includes(response.status)) {
+      if (response) {
         return response;
       }
     } catch (err) {
@@ -28,7 +27,7 @@ export const AuthService = {
     let response: AxiosResponse | undefined;
     try {
       response = await axiosInstance.post(baseUrlSignUp, data);
-      if (response && responseStatus.SUCCESS.includes(response.status)) {
+      if (response) {
         return response;
       }
     } catch (err) {

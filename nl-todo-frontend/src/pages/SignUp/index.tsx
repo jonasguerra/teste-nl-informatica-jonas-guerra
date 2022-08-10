@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Typography } from "@mui/material";
+import { Alert, Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +22,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const {
     control,
     handleSubmit,
@@ -32,9 +35,9 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: any) => {
-    const response = await AuthService.doSignUp(data);
+    const signUpResponse = await AuthService.doSignUp(data);
 
-    if (responseStatus.SUCCESS.includes(response?.status)) {
+    if (responseStatus.SUCCESS.includes(signUpResponse?.status)) {
       //auto login user
       const response = await AuthService.doLogin(data);
       if (responseStatus.SUCCESS.includes(response?.status)) {
@@ -45,6 +48,9 @@ const SignUp = () => {
         );
         navigate(routes.dashboard);
       }
+    } else {
+      console.log("caiu aqui", signUpResponse);
+      setErrorMessage(signUpResponse?.data.message);
     }
   };
 
@@ -62,6 +68,11 @@ const SignUp = () => {
         </Typography>
       </HeaderWrapper>
       <ContentWrapper>
+        {errorMessage && (
+          <Box sx={{ py: "1rem", width: "100%" }}>
+            <Alert severity="error">{errorMessage}</Alert>
+          </Box>
+        )}
         <FieldWrapper>
           <ControlledTextField
             control={control}
