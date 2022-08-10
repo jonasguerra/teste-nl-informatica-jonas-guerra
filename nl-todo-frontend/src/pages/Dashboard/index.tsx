@@ -19,7 +19,7 @@ import EnhancedTableHead, {
   Order,
 } from "../../components/PagesComponents/TableHeader";
 import { Task } from "../../models/task";
-import { TasksService } from "../../services/task.service";
+import { TasksService } from "../../services/Task.service";
 import { PageContainer, PageHeader, PageTitle, TableCellFixed } from "./styles";
 
 const headCells: HeadCell[] = [

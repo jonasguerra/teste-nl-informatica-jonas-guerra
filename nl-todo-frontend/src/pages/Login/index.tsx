@@ -1,6 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ControlledTextField from "../../components/Basics/ControlledTextField";
+import { AuthService } from "../../services/Auth.service";
+import { setUser } from "../../store/slicers/user.slicer";
 import {
   ContentWrapper,
   FieldWrapper,
@@ -10,6 +14,9 @@ import {
 } from "./styles";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     control,
     handleSubmit,
@@ -20,7 +27,11 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+    const response = await AuthService.doLogin(data);
+    let responseData = response?.data;
+    dispatch(setUser(responseData));
+    localStorage.setItem("userDetails", JSON.stringify(responseData));
+    navigate("/dashboard");
   };
 
   return (
