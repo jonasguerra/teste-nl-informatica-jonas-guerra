@@ -1,6 +1,7 @@
 {
   "name": "react-todo-frontend",
   "version": "0.1.0",
+  "homepage": "/dashboard",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",

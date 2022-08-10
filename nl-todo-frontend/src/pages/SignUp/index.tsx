@@ -1,9 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Typography } from "@mui/material";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ControlledTextField from "../../components/Basics/ControlledTextField";
 import { routes } from "../../Routes/routes";
+import { AuthService } from "../../services/Auth.service";
+import { setUser } from "../../store/slicers/user.slicer";
+import { localStorageKeys, responseStatus } from "../../utils/constants";
 import { signUpValidations } from "../../utils/form-validations";
 import {
   ContentWrapper,
@@ -14,6 +18,9 @@ import {
 } from "./styles";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -25,12 +32,21 @@ const SignUp = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
-  };
+    const response = await AuthService.doSignUp(data);
 
-  useEffect(() => {
-    console.log("errors", errors);
-  }, [errors]);
+    if (responseStatus.SUCCESS.includes(response?.status)) {
+      //auto login user
+      const response = await AuthService.doLogin(data);
+      if (responseStatus.SUCCESS.includes(response?.status)) {
+        dispatch(setUser({ user: { token: response?.data.access_token } }));
+        localStorage.setItem(
+          localStorageKeys.userToken,
+          JSON.stringify(response?.data.access_token)
+        );
+        navigate(routes.dashboard);
+      }
+    }
+  };
 
   return (
     <PageContainer>

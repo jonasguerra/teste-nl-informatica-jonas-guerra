@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
@@ -11,6 +11,8 @@ import { routes } from "./routes";
 
 const AppRoutes = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const userSelector = useSelector((state: RootState) => state.userStore.user);
 
@@ -20,6 +22,13 @@ const AppRoutes = () => {
     const token = localStorage.getItem(localStorageKeys.userToken);
     if (token) {
       dispatch(setUser({ user: { token } }));
+    } else {
+      if (
+        location.pathname !== routes.auth.login &&
+        location.pathname !== routes.auth.signUp
+      ) {
+        navigate(routes.auth.login);
+      }
     }
   }, []);
 

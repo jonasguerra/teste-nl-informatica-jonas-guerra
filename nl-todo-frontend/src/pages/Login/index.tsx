@@ -1,4 +1,6 @@
-import { Button, Typography } from "@mui/material";
+import { Alert, Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +8,7 @@ import ControlledTextField from "../../components/Basics/ControlledTextField";
 import { routes } from "../../Routes/routes";
 import { AuthService } from "../../services/Auth.service";
 import { setUser } from "../../store/slicers/user.slicer";
-import { localStorageKeys } from "../../utils/constants";
+import { localStorageKeys, responseStatus } from "../../utils/constants";
 import {
   ContentWrapper,
   FieldWrapper,
@@ -18,6 +20,8 @@ import {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const {
     control,
@@ -31,15 +35,18 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     const response = await AuthService.doLogin(data);
 
-    console.log("response", response);
-    dispatch(setUser({ user: { token: response?.data.access_token } }));
+    if (responseStatus.SUCCESS.includes(response?.status)) {
+      dispatch(setUser({ user: { token: response?.data.access_token } }));
 
-    localStorage.setItem(
-      localStorageKeys.userToken,
-      JSON.stringify(response?.data.access_token)
-    );
+      localStorage.setItem(
+        localStorageKeys.userToken,
+        JSON.stringify(response?.data.access_token)
+      );
 
-    navigate(routes.dashboard);
+      navigate(routes.dashboard);
+    } else {
+      setErrorMessage("Usuário ou senha inválidos");
+    }
   };
 
   return (
@@ -56,6 +63,11 @@ const Login = () => {
         </Typography>
       </HeaderWrapper>
       <ContentWrapper>
+        {errorMessage && (
+          <Box sx={{ py: "1rem", width: "100%" }}>
+            <Alert severity="error">{errorMessage}</Alert>
+          </Box>
+        )}
         <FieldWrapper>
           <ControlledTextField control={control} name="email" label="E-mail" />
         </FieldWrapper>

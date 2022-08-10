@@ -9,6 +9,7 @@ export const PageContainer = styled(Container)`
 export const PageHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
+  padding: 0rem 1.5rem;
 `;
 
 export const PageTitle = styled(Typography).attrs({

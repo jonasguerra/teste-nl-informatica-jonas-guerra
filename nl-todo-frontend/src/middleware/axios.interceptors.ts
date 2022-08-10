@@ -52,7 +52,9 @@ axiosInstance.interceptors.response.use(
     globalSpinnerHide();
     if (response.status === 401) {
       console.log("Não Autorizado");
-      window.location.href = routes.auth.login;
+      if (window.location.pathname !== routes.auth.login) {
+        window.location.href = routes.auth.login;
+      }
     } else {
       return Promise.resolve(response);
     }
