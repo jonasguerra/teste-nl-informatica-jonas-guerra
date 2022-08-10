@@ -5,6 +5,7 @@ import {
   ContentWrapper,
   FieldWrapper,
   HeaderWrapper,
+  LogoWrapper,
   PageContainer,
 } from "./styles";
 
@@ -24,9 +25,15 @@ const Login = () => {
 
   return (
     <PageContainer>
+      <LogoWrapper>
+        <Typography variant="h1">Todo App</Typography>
+      </LogoWrapper>
       <HeaderWrapper>
-        <Typography variant="h3" color="secondary">
+        <Typography variant="h5" color="primary">
           Login
+        </Typography>
+        <Typography variant="body2" color="primary">
+          Insira os dados da sua conta para logar
         </Typography>
       </HeaderWrapper>
       <ContentWrapper>
@@ -38,17 +45,24 @@ const Login = () => {
             control={control}
             name="password"
             label="Senha"
+            type="password"
           />
         </FieldWrapper>
         <FieldWrapper>
           <Button
-            onSubmit={handleSubmit(onSubmit)}
+            onClick={handleSubmit(onSubmit)}
             type="submit"
             variant="contained"
             fullWidth
           >
             Login
           </Button>
+        </FieldWrapper>
+        <FieldWrapper>
+          <Typography>
+            Não tem uma conta? Clique <a href="/register">aqui</a> para criar
+            uma
+          </Typography>
         </FieldWrapper>
       </ContentWrapper>
     </PageContainer>

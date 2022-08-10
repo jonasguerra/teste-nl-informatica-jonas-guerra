@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hookform/resolvers": "^2.9.7",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
