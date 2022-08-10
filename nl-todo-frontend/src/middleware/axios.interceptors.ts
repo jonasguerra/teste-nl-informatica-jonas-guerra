@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { routes } from "../Routes/routes";
 import {
   hideSpinner,
   showSpinner,
@@ -30,15 +29,15 @@ const globalSpinnerHide = () => {
 axiosInstance.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
     globalSpinnerShow();
-    let authorization = "";
+    let authorization;
     try {
-      let userToken = localStorage.getItem(localStorageKeys.userToken);
-      authorization = userToken ? userToken : "";
+      authorization = localStorage.getItem(localStorageKeys.userToken);
+      console.log("token", authorization);
     } catch (e) {
       console.log("Sem autorização", e);
     }
     if (authorization) {
-      config.headers.Authorization = authorization;
+      config.headers.Authorization = `Bearer ${authorization}`;
     }
     return config;
   },
@@ -52,9 +51,9 @@ axiosInstance.interceptors.response.use(
     globalSpinnerHide();
     if (response.status === 401) {
       console.log("Não Autorizado");
-      if (window.location.pathname !== routes.auth.login) {
+      /*if (window.location.pathname !== routes.auth.login) {
         window.location.href = routes.auth.login;
-      }
+      }*/
     } else {
       return Promise.resolve(response);
     }

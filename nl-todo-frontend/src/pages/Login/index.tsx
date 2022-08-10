@@ -40,7 +40,7 @@ const Login = () => {
 
       localStorage.setItem(
         localStorageKeys.userToken,
-        JSON.stringify(response?.data.access_token)
+        response?.data.access_token
       );
 
       navigate(routes.dashboard);

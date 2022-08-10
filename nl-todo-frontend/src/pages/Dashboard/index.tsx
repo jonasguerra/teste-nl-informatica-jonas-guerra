@@ -10,7 +10,7 @@ import {
   TableCell,
   TableContainer,
   TablePagination,
-  TableRow,
+  TableRow
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,7 @@ import TaskForm from "../../components/PagesComponents/Dashboard/TaskForm";
 import DashboardNavbar from "../../components/PagesComponents/Navbar";
 import EnhancedTableHead, {
   HeadCell,
-  Order,
+  Order
 } from "../../components/PagesComponents/TableHeader";
 import { Task } from "../../models/Task";
 import { TasksService } from "../../services/Task.service";
@@ -151,7 +151,7 @@ const Dashboard = () => {
       <PageContainer>
         <PageHeader>
           <PageTitle>Dashboard</PageTitle>
-          <Button variant="contained" onClick={handleForm}>
+          <Button variant="contained" onClick={() => handleFormOpen()}>
             Nova Nota
           </Button>
         </PageHeader>

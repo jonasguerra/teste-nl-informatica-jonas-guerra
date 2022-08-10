@@ -22,13 +22,6 @@ const AppRoutes = () => {
     const token = localStorage.getItem(localStorageKeys.userToken);
     if (token) {
       dispatch(setUser({ user: { token } }));
-    } else {
-      if (
-        location.pathname !== routes.auth.login &&
-        location.pathname !== routes.auth.signUp
-      ) {
-        navigate(routes.auth.login);
-      }
     }
   }, []);
 
