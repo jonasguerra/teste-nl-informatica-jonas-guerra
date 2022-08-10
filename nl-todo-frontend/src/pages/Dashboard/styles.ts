@@ -2,14 +2,13 @@ import { Box, Container, Grid, TableCell, Typography } from "@mui/material";
 import styled from "styled-components";
 
 export const PageContainer = styled(Container)`
-  padding: 2rem;
   margin-top: 100px;
 `;
 
 export const PageHeader = styled(Box)`
   display: flex;
   justify-content: space-between;
-  padding: 0rem 1.5rem;
+  padding: 1rem 2rem;
 `;
 
 export const PageTitle = styled(Typography).attrs({

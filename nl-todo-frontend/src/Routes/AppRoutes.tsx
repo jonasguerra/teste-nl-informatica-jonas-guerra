@@ -31,6 +31,7 @@ const AppRoutes = () => {
       location.pathname != routes.auth.login &&
       location.pathname != routes.auth.signUp ? (
         <Routes>
+          <Route path={routes.root} element={<Dashboard />} />
           <Route path={routes.dashboard} element={<Dashboard />} />
         </Routes>
       ) : (

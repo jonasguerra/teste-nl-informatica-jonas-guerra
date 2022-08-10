@@ -1,4 +1,3 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -12,7 +11,6 @@ import { Task } from "../../../../models/Task";
 import { TasksService } from "../../../../services/Task.service";
 import { showSnackbarAlert } from "../../../../store/slicers/snackbarAlert.slicer";
 import { responseStatus } from "../../../../utils/constants";
-import { taskValidations } from "../../../../utils/form-validations";
 import ControlledTextField from "../../../Basics/ControlledTextField";
 interface Props {
   editionTask: Task | undefined;
@@ -31,7 +29,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: editionTask?.id ? editionTask : new Task(),
-    resolver: yupResolver(taskValidations),
+    //resolver: yupResolver(taskValidations),
   });
 
   const onSubmit: SubmitHandler<Task> = async (data: Task) => {
@@ -72,7 +70,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
     >
       <DialogTitle variant="h5" color="secondary">
         {editionTask?.id ? "Editar" : "Nova"}
-        {" Marca"}
+        {" Tarefa"}
       </DialogTitle>
       <Divider />
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,9 +79,9 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
             <Grid item xs={12}>
               <ControlledTextField
                 control={control}
-                name="name"
+                name="title"
                 label="Nome"
-                errorMessage={errors.name?.message}
+                errorMessage={errors.title?.message}
               />
             </Grid>
             <Grid item xs={12}>

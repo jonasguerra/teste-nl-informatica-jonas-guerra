@@ -44,7 +44,7 @@ const SignUp = () => {
         dispatch(setUser({ user: { token: response?.data.access_token } }));
         localStorage.setItem(
           localStorageKeys.userToken,
-          JSON.stringify(response?.data.access_token)
+          response?.data.access_token
         );
         navigate(routes.dashboard);
       }

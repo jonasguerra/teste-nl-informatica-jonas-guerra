@@ -1,11 +1,8 @@
-import { BaseDto } from 'src/common/dto/base.dto';
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity } from "src/common/entities/base.entity";
+import { Column, Entity } from "typeorm";
 
 @Entity()
-export class Todo extends BaseDto {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Todo extends BaseEntity {
   @Column()
   title: string;
 
@@ -14,10 +11,4 @@ export class Todo extends BaseDto {
 
   @Column({ default: false })
   completed: boolean;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

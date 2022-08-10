@@ -35,18 +35,10 @@ export default function SnackbarAlert() {
   return (
     <Snackbar
       open={snackbarSelector.open}
-      autoHideDuration={5000}
+      autoHideDuration={3000}
       onClose={handleClose}
     >
-      <Alert
-        severity={snackbarSelector.type}
-        action={renderAction}
-        sx={{
-          border: "solid",
-          borderWidth: "0.5px",
-          borderColor: theme.palette.secondary.light,
-        }}
-      >
+      <Alert severity={snackbarSelector.type} action={renderAction}>
         <AlertTitle>{snackbarSelector.title}</AlertTitle>
         {snackbarSelector.message}
       </Alert>

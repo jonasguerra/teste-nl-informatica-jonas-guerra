@@ -12,6 +12,7 @@ interface Props extends BaseTextFieldProps {
   showHelperAdornment?: boolean;
   helperText?: string;
   helperAction?: () => void;
+  minRows?: number;
   hidden?: boolean;
 }
 
@@ -27,6 +28,7 @@ export default function ControlledTextField({
   showHelperAdornment = false,
   helperAction,
   helperText,
+  minRows = 1,
   hidden,
   ...rest
 }: Props) {
@@ -43,6 +45,8 @@ export default function ControlledTextField({
           error={!!errorMessage}
           helperText={errorMessage ? errorMessage : helperText}
           type={type}
+          minRows={minRows}
+          multiline={minRows > 1}
         />
       </>
     );

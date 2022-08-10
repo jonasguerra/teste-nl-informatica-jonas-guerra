@@ -2,15 +2,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Button,
-  Card,
-  CardContent,
   IconButton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TablePagination,
-  TableRow
+  TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -19,20 +17,16 @@ import TaskForm from "../../components/PagesComponents/Dashboard/TaskForm";
 import DashboardNavbar from "../../components/PagesComponents/Navbar";
 import EnhancedTableHead, {
   HeadCell,
-  Order
+  Order,
 } from "../../components/PagesComponents/TableHeader";
 import { Task } from "../../models/Task";
 import { TasksService } from "../../services/Task.service";
 import { showSnackbarAlert } from "../../store/slicers/snackbarAlert.slicer";
 import { responseStatus } from "../../utils/constants";
+import { getFullDate } from "../../utils/methods";
 import { PageContainer, PageHeader, PageTitle, TableCellFixed } from "./styles";
 
 const headCells: HeadCell[] = [
-  {
-    id: "id",
-    numeric: false,
-    label: "Id",
-  },
   {
     id: "title",
     numeric: false,
@@ -51,7 +45,7 @@ const headCells: HeadCell[] = [
   {
     id: "actions",
     numeric: false,
-    label: "Actions",
+    label: "Ações",
   },
 ];
 
@@ -135,8 +129,8 @@ const Dashboard = () => {
   const fetchData = async () => {
     const response = await TasksService.getTasks();
     if (response) {
-      setTotalItems(response.data.count);
-      setTasks(response.data.results);
+      setTotalItems(response.data.length);
+      setTasks(response.data);
       setLoading(false);
     }
   };
@@ -156,49 +150,43 @@ const Dashboard = () => {
           </Button>
         </PageHeader>
         {!loading && (
-          <Card>
-            <CardContent>
-              <TableContainer>
-                <Table>
-                  <EnhancedTableHead headCells={headCells} order={order} />
-                  <TableBody>
-                    {tasks?.length > 0 &&
-                      tasks
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                        .map((task: Task) => {
-                          return (
-                            <TableRow hover key={task.id}>
-                              <TableCell>{task.title}</TableCell>
-                              <TableCellFixed>
-                                <IconButton>
-                                  <EditIcon
-                                    onClick={() => handleFormOpen(task)}
-                                  />
-                                </IconButton>
-                                <IconButton onClick={() => handleDelete(task)}>
-                                  <DeleteIcon />
-                                </IconButton>
-                              </TableCellFixed>
-                            </TableRow>
-                          );
-                        })}
-                  </TableBody>
-                </Table>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, 50]}
-                  component="div"
-                  count={totalItems}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </TableContainer>
-            </CardContent>
-          </Card>
+          <TableContainer>
+            <Table>
+              <EnhancedTableHead
+                headCells={headCells}
+                order={order}
+                onRequestSort={() => {}}
+              />
+              <TableBody>
+                {tasks
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((task: Task) => (
+                    <TableRow hover key={task.id}>
+                      <TableCell>{task.title}</TableCell>
+                      <TableCell>{task.description}</TableCell>
+                      <TableCell>{getFullDate(task.createdAt)}</TableCell>
+                      <TableCellFixed>
+                        <IconButton>
+                          <EditIcon onClick={() => handleFormOpen(task)} />
+                        </IconButton>
+                        <IconButton onClick={() => handleDelete(task)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </TableCellFixed>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              component="div"
+              count={totalItems}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableContainer>
         )}
       </PageContainer>
       {showEditionForm && (
