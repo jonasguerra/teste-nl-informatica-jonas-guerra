@@ -7,8 +7,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { hideSnackbarAlert } from "../../../../store/slicers/snackbarAlert.slicer";
-import { RootState } from "../../../../store/store";
+import { hideSnackbarAlert } from "../../../store/slicers/snackbarAlert.slicer";
+import { RootState } from "../../../store/store";
 
 export default function SnackbarAlert() {
   const theme = useTheme();
