@@ -1,4 +1,3 @@
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -14,6 +13,9 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import DialogWithActions from "../../components/Basics/DialogWithActions";
+import TaskForm from "../../components/PagesComponents/Dashboard/TaskForm";
 import DashboardNavbar from "../../components/PagesComponents/Navbar";
 import EnhancedTableHead, {
   HeadCell,
@@ -21,6 +23,8 @@ import EnhancedTableHead, {
 } from "../../components/PagesComponents/TableHeader";
 import { Task } from "../../models/Task";
 import { TasksService } from "../../services/Task.service";
+import { showSnackbarAlert } from "../../store/slicers/snackbarAlert.slicer";
+import { responseStatus } from "../../utils/constants";
 import { PageContainer, PageHeader, PageTitle, TableCellFixed } from "./styles";
 
 const headCells: HeadCell[] = [
@@ -52,14 +56,20 @@ const headCells: HeadCell[] = [
 ];
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
-  const [tasks, setTasks] = useState<Task[]>([]);
 
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Task>("createdAt");
   const [page, setPage] = useState(0);
   const [totalItems, setTotalItems] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [editionTask, setEditionTask] = useState<Task | undefined>(undefined);
+
+  const [showEditionForm, setShowEditionForm] = useState<boolean>(false);
+  const [showDeleteForm, setShowDeleteForm] = useState<boolean>(false);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -72,9 +82,63 @@ const Dashboard = () => {
     setPage(0);
   };
 
+  const handleFormOpen = (task?: Task) => {
+    if (task) {
+      setEditionTask(task);
+    }
+    setShowEditionForm(true);
+  };
+
+  const handleFormClose = () => {
+    setEditionTask(undefined);
+    setShowEditionForm(false);
+  };
+
+  const handleFormSubmit = () => {
+    setEditionTask(undefined);
+    setShowEditionForm(false);
+    fetchData();
+  };
+
+  const handleDelete = (task: Task) => {
+    setShowDeleteForm(true);
+    setEditionTask(task);
+  };
+
+  const handleDeleteClose = () => {
+    setShowDeleteForm(false);
+    setEditionTask(undefined);
+  };
+
+  const handleDeleteConfirm = async () => {
+    setShowDeleteForm(false);
+    if (editionTask?.id) {
+      const response = await TasksService.deleteTask(editionTask.id);
+      let success =
+        response?.status && responseStatus.SUCCESS.includes(response?.status);
+      dispatch(
+        showSnackbarAlert({
+          snackbarData: {
+            title: success ? "Sucesso" : "Erro",
+            message: success
+              ? "Registro excluído!"
+              : "Houve um erro ao processar a sua solicitação",
+            type: success ? "success" : "error",
+          },
+        })
+      );
+    }
+    setEditionTask(undefined);
+    fetchData();
+  };
+
   const fetchData = async () => {
     const response = await TasksService.getTasks();
-    setTasks(response?.data);
+    if (response) {
+      setTotalItems(response.data.count);
+      setTasks(response.data.results);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -87,7 +151,9 @@ const Dashboard = () => {
       <PageContainer>
         <PageHeader>
           <PageTitle>Dashboard</PageTitle>
-          <Button variant="contained">Nova Nota</Button>
+          <Button variant="contained" onClick={handleForm}>
+            Nova Nota
+          </Button>
         </PageHeader>
         {!loading && (
           <Card>
@@ -108,13 +174,12 @@ const Dashboard = () => {
                               <TableCell>{task.title}</TableCell>
                               <TableCellFixed>
                                 <IconButton>
-                                  <EditIcon />
+                                  <EditIcon
+                                    onClick={() => handleFormOpen(task)}
+                                  />
                                 </IconButton>
-                                <IconButton>
+                                <IconButton onClick={() => handleDelete(task)}>
                                   <DeleteIcon />
-                                </IconButton>
-                                <IconButton>
-                                  <ArrowForwardIcon />
                                 </IconButton>
                               </TableCellFixed>
                             </TableRow>
@@ -136,6 +201,21 @@ const Dashboard = () => {
           </Card>
         )}
       </PageContainer>
+      {showEditionForm && (
+        <TaskForm
+          editionTask={editionTask}
+          formSubmit={handleFormSubmit}
+          formCancel={handleFormClose}
+        />
+      )}
+      {showDeleteForm && (
+        <DialogWithActions
+          title="Excluir Nota"
+          message={`Deseja excluir a nota: ${editionTask?.title}?`}
+          onConfirm={() => handleDeleteConfirm()}
+          onCancel={() => handleDeleteClose()}
+        />
+      )}
     </>
   );
 };

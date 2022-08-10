@@ -5,7 +5,7 @@ import { responseStatus } from "../utils/constants";
 
 let showReponsesInConsole = process.env.REACT_APP_SHOW_RESPONSES_IN_CONSOLE;
 
-const baseUrl = "/tasks";
+const baseUrl = "/todos";
 
 export const TasksService = {
   getTasks: async () => {
@@ -72,7 +72,7 @@ export const TasksService = {
     }
   },
 
-  deleteTask: async (id: number) => {
+  deleteTask: async (id: string) => {
     let response: AxiosResponse | undefined;
     try {
       response = await axiosInstance.delete(`${baseUrl}/${id}/`);
