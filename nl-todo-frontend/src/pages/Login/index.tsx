@@ -28,17 +28,21 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any) => {
+    console.log("data", data);
     const response = await AuthService.doLogin(data);
+
+    console.log("response", response);
+
     let responseData = response?.data;
 
-    dispatch(setUser({ user: { token: responseData.access_token } }));
+    dispatch(setUser({ user: { token: responseData?.access_token } }));
 
     localStorage.setItem(
       localStorageKeys.userToken,
-      JSON.stringify(responseData.access_token)
+      JSON.stringify(responseData?.access_token)
     );
 
-    navigate("/dashboard");
+    //navigate("/dashboard");
   };
 
   return (

@@ -9,9 +9,7 @@ import { store } from "../store/store";
 import { localStorageKeys } from "../utils/constants";
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_URL ||
-    "Nenhum-endpoint-configurado-no-arquivo-.env",
+  baseURL: process.env.REACT_APP_API_URL,
   validateStatus: (status) =>
     [400, 401, 403, 404, 409, 422, 200, 201, 204, 304].includes(status),
 });
@@ -53,6 +51,7 @@ axiosInstance.interceptors.response.use(
   async (response: AxiosResponse) => {
     globalSpinnerHide();
     if (response.status === 401) {
+      console.log("Não Autorizado");
       window.location.href = routes.auth.login;
     } else {
       return Promise.resolve(response);

@@ -1,17 +1,17 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../middleware/axios.interceptors";
-import { User } from "../models/User";
 import { responseStatus } from "../utils/constants";
 
 let showReponsesInConsole = process.env.REACT_APP_SHOW_RESPONSES_IN_CONSOLE;
 
-const baseUrl = "api/token/";
+const baseUrl = "auth/login";
 
 export const AuthService = {
-  doLogin: async (data: User) => {
+  doLogin: async (data: any) => {
     let response: AxiosResponse | undefined;
     try {
-      response = await axiosInstance.post(`${baseUrl}`, data);
+      response = await axiosInstance.post("auth/login", data);
+      console.log(response);
       if (response && responseStatus.SUCCESS.includes(response.status)) {
         return response;
       }
