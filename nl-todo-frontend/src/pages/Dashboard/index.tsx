@@ -18,7 +18,7 @@ import EnhancedTableHead, {
   HeadCell,
   Order,
 } from "../../components/PagesComponents/TableHeader";
-import { Task } from "../../models/task";
+import { Task } from "../../models/Task";
 import { TasksService } from "../../services/Task.service";
 import { PageContainer, PageHeader, PageTitle, TableCellFixed } from "./styles";
 

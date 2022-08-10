@@ -1,10 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { routes } from "../Routes/routes";
 import {
   hideSpinner,
   showSpinner,
 } from "../store/slicers/globalSpinner.slicer";
-
 import { store } from "../store/store";
+
+import { localStorageKeys } from "../utils/constants";
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL:
@@ -23,7 +25,7 @@ const globalSpinnerShow = () => {
 const globalSpinnerHide = () => {
   const hide = setTimeout(() => {
     store.dispatch(hideSpinner());
-  }, 700);
+  }, 500);
   return () => clearTimeout(hide);
 };
 
@@ -32,12 +34,13 @@ axiosInstance.interceptors.request.use(
     globalSpinnerShow();
     let authorization = "";
     try {
-      authorization = JSON.parse(localStorage.getItem("userDetails"));
+      let userToken = localStorage.getItem(localStorageKeys.userToken);
+      authorization = userToken ? userToken : "";
     } catch (e) {
       console.log("Sem autorização", e);
     }
     if (authorization) {
-      config.headers.Authorization = "Bearer " + authorization.access;
+      config.headers.Authorization = authorization;
     }
     return config;
   },
@@ -50,7 +53,7 @@ axiosInstance.interceptors.response.use(
   async (response: AxiosResponse) => {
     globalSpinnerHide();
     if (response.status === 401) {
-      window.location.href = "/brasdiesel/login";
+      window.location.href = routes.auth.login;
     } else {
       return Promise.resolve(response);
     }

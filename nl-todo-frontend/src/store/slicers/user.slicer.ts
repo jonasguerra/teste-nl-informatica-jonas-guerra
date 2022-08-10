@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../models/User";
 
 type UserReducer = {
-  user: User;
+  user: {
+    token: string;
+  };
 };
 
 const initialState: UserReducer = {
   user: {
-    username: "",
-    password: "",
     token: "",
-    initials: "",
   },
 };
 

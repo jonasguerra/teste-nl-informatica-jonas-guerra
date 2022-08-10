@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import ControlledTextField from "../../components/Basics/ControlledTextField";
 import { AuthService } from "../../services/Auth.service";
 import { setUser } from "../../store/slicers/user.slicer";
+import { localStorageKeys } from "../../utils/constants";
 import {
   ContentWrapper,
   FieldWrapper,
@@ -29,8 +30,14 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     const response = await AuthService.doLogin(data);
     let responseData = response?.data;
-    dispatch(setUser(responseData));
-    localStorage.setItem("userDetails", JSON.stringify(responseData));
+
+    dispatch(setUser({ user: { token: responseData.access_token } }));
+
+    localStorage.setItem(
+      localStorageKeys.userToken,
+      JSON.stringify(responseData.access_token)
+    );
+
     navigate("/dashboard");
   };
 

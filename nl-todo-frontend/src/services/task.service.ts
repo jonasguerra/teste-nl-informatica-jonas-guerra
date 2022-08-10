@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../middleware/axios.interceptors";
-import { Task } from "../models/task";
+import { Task } from "../models/Task";
 import { responseStatus } from "../utils/constants";
 
 let showReponsesInConsole = process.env.REACT_APP_SHOW_RESPONSES_IN_CONSOLE;
