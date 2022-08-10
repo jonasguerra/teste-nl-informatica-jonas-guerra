@@ -1,11 +1,11 @@
 import { ThemeProvider } from "styled-components";
 import theme from "./global/theme/theme";
-import SignUp from "./pages/SignUp";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <SignUp />
+      <Dashboard />
     </ThemeProvider>
   );
 }
