@@ -3,7 +3,7 @@ import { IconButton, Toolbar, Tooltip } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { AccountMenu } from "../DashboardAccountMenu";
+import { AccountMenu } from "./DashboardAccountMenu";
 import { DashboardNavbarRoot } from "./styles";
 
 export default function DashboardNavbar() {

@@ -14,7 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import DashboardNavbar from "../../components/PagesComponents/Dashboard/DashboardNavbar";
+import DashboardNavbar from "../../components/PagesComponents/Navbar";
 import EnhancedTableHead, {
   HeadCell,
   Order,
