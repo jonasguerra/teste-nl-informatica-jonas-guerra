@@ -6,14 +6,6 @@ import { routes } from "../../../../Routes/routes";
 import { clearUser } from "../../../../store/slicers/user.slicer";
 import { localStorageKeys } from "../../../../utils/constants";
 
-export const accountItems = [
-  {
-    href: routes.auth.logout,
-    icon: <LogoutIcon />,
-    title: "Logout",
-  },
-];
-
 interface Props {
   anchorEl: HTMLElement | null;
   open: boolean;
@@ -41,12 +33,10 @@ export function AccountMenu({ anchorEl, open, handleClose }: Props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        {accountItems.map((item) => (
-          <Button color="secondary" onClick={handleLogout}>
-            <LogoutIcon />
-            Logout
-          </Button>
-        ))}
+        <Button color="secondary" onClick={handleLogout}>
+          <LogoutIcon />
+          Logout
+        </Button>
       </Menu>
     </div>
   );

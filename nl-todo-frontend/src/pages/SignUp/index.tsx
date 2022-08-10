@@ -3,6 +3,7 @@ import { Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import ControlledTextField from "../../components/Basics/ControlledTextField";
+import { routes } from "../../Routes/routes";
 import { signUpValidations } from "../../utils/form-validations";
 import {
   ContentWrapper,
@@ -83,7 +84,8 @@ const SignUp = () => {
         </FieldWrapper>
         <FieldWrapper>
           <Typography>
-            Já tem uma conta? Clique <a href="/login">aqui</a> para logar
+            Já tem uma conta? Clique <a href={routes.auth.login}>aqui</a> para
+            logar
           </Typography>
         </FieldWrapper>
       </ContentWrapper>

@@ -79,8 +79,8 @@ const Login = () => {
         </FieldWrapper>
         <FieldWrapper>
           <Typography>
-            Não tem uma conta? Clique <a href="/register">aqui</a> para criar
-            uma
+            Não tem uma conta? Clique <a href={routes.auth.signUp}>aqui</a> para
+            criar uma
           </Typography>
         </FieldWrapper>
       </ContentWrapper>
