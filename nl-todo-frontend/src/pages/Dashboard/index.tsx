@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import DashboardNavbar from "../../components/PagesComponents/Dashboard/DashboardNavbar";
 import EnhancedTableHead, {
   HeadCell,
   Order,
@@ -81,54 +82,61 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <PageContainer>
-      <PageHeader>
-        <PageTitle>Dashboard</PageTitle>
-        <Button variant="contained">Nova Nota</Button>
-      </PageHeader>
-      {!loading && (
-        <Card>
-          <CardContent>
-            <TableContainer>
-              <Table>
-                <EnhancedTableHead headCells={headCells} order={order} />
-                <TableBody>
-                  {tasks
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((task: Task) => {
-                      return (
-                        <TableRow hover key={task.id}>
-                          <TableCell>{task.title}</TableCell>
-                          <TableCellFixed>
-                            <IconButton>
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton>
-                              <DeleteIcon />
-                            </IconButton>
-                            <IconButton>
-                              <ArrowForwardIcon />
-                            </IconButton>
-                          </TableCellFixed>
-                        </TableRow>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, 50]}
-                component="div"
-                count={totalItems}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableContainer>
-          </CardContent>
-        </Card>
-      )}
-    </PageContainer>
+    <>
+      <DashboardNavbar />
+      <PageContainer>
+        <PageHeader>
+          <PageTitle>Dashboard</PageTitle>
+          <Button variant="contained">Nova Nota</Button>
+        </PageHeader>
+        {!loading && (
+          <Card>
+            <CardContent>
+              <TableContainer>
+                <Table>
+                  <EnhancedTableHead headCells={headCells} order={order} />
+                  <TableBody>
+                    {tasks?.length > 0 &&
+                      tasks
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((task: Task) => {
+                          return (
+                            <TableRow hover key={task.id}>
+                              <TableCell>{task.title}</TableCell>
+                              <TableCellFixed>
+                                <IconButton>
+                                  <EditIcon />
+                                </IconButton>
+                                <IconButton>
+                                  <DeleteIcon />
+                                </IconButton>
+                                <IconButton>
+                                  <ArrowForwardIcon />
+                                </IconButton>
+                              </TableCellFixed>
+                            </TableRow>
+                          );
+                        })}
+                  </TableBody>
+                </Table>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, 50]}
+                  component="div"
+                  count={totalItems}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableContainer>
+            </CardContent>
+          </Card>
+        )}
+      </PageContainer>
+    </>
   );
 };
 

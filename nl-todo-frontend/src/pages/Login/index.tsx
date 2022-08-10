@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ControlledTextField from "../../components/Basics/ControlledTextField";
+import { routes } from "../../Routes/routes";
 import { AuthService } from "../../services/Auth.service";
 import { setUser } from "../../store/slicers/user.slicer";
 import { localStorageKeys } from "../../utils/constants";
@@ -28,21 +29,17 @@ const Login = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log("data", data);
     const response = await AuthService.doLogin(data);
 
     console.log("response", response);
-
-    let responseData = response?.data;
-
-    dispatch(setUser({ user: { token: responseData?.access_token } }));
+    dispatch(setUser({ user: { token: response?.data.access_token } }));
 
     localStorage.setItem(
       localStorageKeys.userToken,
-      JSON.stringify(responseData?.access_token)
+      JSON.stringify(response?.data.access_token)
     );
 
-    //navigate("/dashboard");
+    navigate(routes.dashboard);
   };
 
   return (

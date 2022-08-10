@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const PageContainer = styled(Container)`
   padding: 2rem;
+  margin-top: 100px;
 `;
 
 export const PageHeader = styled(Box)`

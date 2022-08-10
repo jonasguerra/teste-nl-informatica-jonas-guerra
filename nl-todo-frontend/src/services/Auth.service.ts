@@ -10,8 +10,7 @@ export const AuthService = {
   doLogin: async (data: any) => {
     let response: AxiosResponse | undefined;
     try {
-      response = await axiosInstance.post("auth/login", data);
-      console.log(response);
+      response = await axiosInstance.post(baseUrl, data);
       if (response && responseStatus.SUCCESS.includes(response.status)) {
         return response;
       }
