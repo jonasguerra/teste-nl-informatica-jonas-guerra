@@ -12,7 +12,7 @@
  - yarn install
  - yarn start
  
- ### Abrir outra janela do terminal e acessar nl-todo-fronent e executar:
+ ### Abrir outra janela do terminal e acessar nl-todo-frontent e executar:
  - yarn install
  - yarn start
  
