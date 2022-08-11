@@ -11,6 +11,7 @@ import { Task } from "../../../../models/Task";
 import { TasksService } from "../../../../services/Task.service";
 import { showSnackbarAlert } from "../../../../store/slicers/snackbarAlert.slicer";
 import { responseStatus } from "../../../../utils/constants";
+import ControlledCheckbox from "../../../Basics/ControlledCheckbox";
 import ControlledTextField from "../../../Basics/ControlledTextField";
 interface Props {
   editionTask: Task | undefined;
@@ -35,6 +36,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
   const onSubmit: SubmitHandler<Task> = async (data: Task) => {
     let response: AxiosResponse | undefined;
     if (data?.id) {
+      data.createdAt = editionTask?.id && editionTask.createdAt;
       response = await TasksService.updateTask(data);
     } else {
       response = await TasksService.createTask(data);
@@ -91,6 +93,14 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
                 name="description"
                 errorMessage={errors.description?.message}
                 minRows={3}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ControlledCheckbox
+                control={control}
+                label="Concluída"
+                name="completed"
+                errorMessage={errors.description?.message}
               />
             </Grid>
           </Grid>

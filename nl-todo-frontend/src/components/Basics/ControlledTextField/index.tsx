@@ -2,7 +2,7 @@ import { BaseTextFieldProps, TextField } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 
 interface Props extends BaseTextFieldProps {
-  control: Control<any>;
+  control: Control<any, any>;
   name: string;
   defaultValue?: string;
   type?: string;

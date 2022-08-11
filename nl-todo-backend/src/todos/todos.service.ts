@@ -1,13 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Todo } from 'src/todos/entities/todo.entity';
-import { Repository } from 'typeorm';
-import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Todo } from "src/todos/entities/todo.entity";
+import { Repository } from "typeorm";
+import { CreateTodoDto } from "./dto/create-todo.dto";
+import { UpdateTodoDto } from "./dto/update-todo.dto";
 
 @Injectable()
 export class TodosService {
-  constructor(@InjectRepository(Todo) private todoRepository: Repository<Todo>) {}
+  constructor(
+    @InjectRepository(Todo) private todoRepository: Repository<Todo>
+  ) {}
 
   async create(createTodoDto: CreateTodoDto) {
     return this.todoRepository.save(createTodoDto);

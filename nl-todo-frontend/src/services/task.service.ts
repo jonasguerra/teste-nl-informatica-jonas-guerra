@@ -59,7 +59,7 @@ export const TasksService = {
   updateTask: async (data: Task) => {
     let response: AxiosResponse | undefined;
     try {
-      response = await axiosInstance.put(`${baseUrl}/${data.id}/`, data);
+      response = await axiosInstance.patch(`${baseUrl}/${data.id}/`, data);
       if (response && responseStatus.SUCCESS.includes(response.status)) {
         return response;
       }

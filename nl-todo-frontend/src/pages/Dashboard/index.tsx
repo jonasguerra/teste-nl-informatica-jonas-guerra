@@ -1,3 +1,5 @@
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -41,6 +43,11 @@ const headCells: HeadCell[] = [
     id: "createdAt",
     numeric: false,
     label: "Criado em",
+  },
+  {
+    id: "completed",
+    numeric: false,
+    label: "Finalizada",
   },
   {
     id: "actions",
@@ -144,7 +151,7 @@ const Dashboard = () => {
       <DashboardNavbar />
       <PageContainer>
         <PageHeader>
-          <PageTitle>Dashboard</PageTitle>
+          <PageTitle>Suas notas</PageTitle>
           <Button variant="contained" onClick={() => handleFormOpen()}>
             Nova Nota
           </Button>
@@ -165,6 +172,9 @@ const Dashboard = () => {
                       <TableCell>{task.title}</TableCell>
                       <TableCell>{task.description}</TableCell>
                       <TableCell>{getFullDate(task.createdAt)}</TableCell>
+                      <TableCell>
+                        {task.completed ? <CheckIcon /> : <CloseIcon />}
+                      </TableCell>
                       <TableCellFixed>
                         <IconButton>
                           <EditIcon onClick={() => handleFormOpen(task)} />

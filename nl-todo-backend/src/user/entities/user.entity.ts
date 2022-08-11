@@ -1,6 +1,7 @@
 import * as bcrypt from "bcrypt";
 import { BaseEntity } from "src/common/entities/base.entity";
-import { BeforeInsert, Column, Entity } from "typeorm";
+import { Todo } from "src/todos/entities/todo.entity";
+import { BeforeInsert, Column, Entity, OneToMany } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -15,6 +16,9 @@ export class User extends BaseEntity {
 
   @Column({ default: false })
   isAdmin: boolean;
+
+  @OneToMany((type) => Todo, (todo) => todo.userId)
+  todos: Todo[];
 
   @BeforeInsert() async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);

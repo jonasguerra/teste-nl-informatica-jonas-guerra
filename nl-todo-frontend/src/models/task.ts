@@ -2,21 +2,18 @@ export class Task {
   id?: string;
   title: string;
   description: string;
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
+  completed: boolean;
+  createdAt: string;
 
   constructor(
     title: string = "",
     description: string = " ",
-    status: string = "",
-    createdAt: Date = new Date(),
-    updatedAt: Date = new Date()
+    completed: boolean = false,
+    createdAt: string = ""
   ) {
     this.title = title;
     this.description = description;
-    this.status = status;
+    this.completed = completed;
     this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
   }
 }
