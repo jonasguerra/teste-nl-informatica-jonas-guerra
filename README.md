@@ -21,6 +21,6 @@ Tecnologias utilizadas no backend:
 NestJS, Typescript, JWT auth, SQLite3, TypeORM, arquivos de ambiente.
 
 Tecnologias utilizadas no frontend:
-ReactJS, Typescript, MaterialUI, axios, redux, styled-components, react-hook-form, middlewares, arquivos de ambiente, hooks.
+ReactJS, Typescript, MaterialUI, axios, redux toolkit, styled-components, react-hook-form, middlewares, arquivos de ambiente, hooks.
 
 Ps: Os arquivos de ambiente foram commitados com o projeto por não conterem nenhuma chave relevante.
