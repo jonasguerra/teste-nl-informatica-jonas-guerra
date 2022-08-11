@@ -62,40 +62,46 @@ const Login = () => {
           Insira os dados da sua conta para logar
         </Typography>
       </HeaderWrapper>
-      <ContentWrapper>
-        {errorMessage && (
-          <Box sx={{ py: "1rem", width: "100%" }}>
-            <Alert severity="error">{errorMessage}</Alert>
-          </Box>
-        )}
-        <FieldWrapper>
-          <ControlledTextField control={control} name="email" label="E-mail" />
-        </FieldWrapper>
-        <FieldWrapper>
-          <ControlledTextField
-            control={control}
-            name="password"
-            label="Senha"
-            type="password"
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <Button
-            onClick={handleSubmit(onSubmit)}
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
-            Login
-          </Button>
-        </FieldWrapper>
-        <FieldWrapper>
-          <Typography>
-            Não tem uma conta? Clique <a href={routes.auth.signUp}>aqui</a> para
-            criar uma
-          </Typography>
-        </FieldWrapper>
-      </ContentWrapper>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+        <ContentWrapper>
+          {errorMessage && (
+            <Box sx={{ py: "1rem", width: "100%" }}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Box>
+          )}
+          <FieldWrapper>
+            <ControlledTextField
+              control={control}
+              name="email"
+              label="E-mail"
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <ControlledTextField
+              control={control}
+              name="password"
+              label="Senha"
+              type="password"
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              type="submit"
+              variant="contained"
+              fullWidth
+            >
+              Login
+            </Button>
+          </FieldWrapper>
+          <FieldWrapper>
+            <Typography>
+              Não tem uma conta? Clique <a href={routes.auth.signUp}>aqui</a>{" "}
+              para criar uma
+            </Typography>
+          </FieldWrapper>
+        </ContentWrapper>
+      </form>
     </PageContainer>
   );
 };

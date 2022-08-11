@@ -67,55 +67,57 @@ const SignUp = () => {
           Insira seu e-mail e senha para criar a sua conta
         </Typography>
       </HeaderWrapper>
-      <ContentWrapper>
-        {errorMessage && (
-          <Box sx={{ py: "1rem", width: "100%" }}>
-            <Alert severity="error">{errorMessage}</Alert>
-          </Box>
-        )}
-        <FieldWrapper>
-          <ControlledTextField
-            control={control}
-            name="email"
-            label="E-mail"
-            errorMessage={errors?.email?.message}
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <ControlledTextField
-            control={control}
-            name="password"
-            label="Senha"
-            type="password"
-            errorMessage={errors?.password?.message}
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <ControlledTextField
-            control={control}
-            name="password_confirmation"
-            label="Confirmar senha"
-            type="password"
-            errorMessage={errors?.password_confirmation?.message}
-          />
-        </FieldWrapper>
-        <FieldWrapper>
-          <Button
-            onClick={handleSubmit(onSubmit)}
-            type="submit"
-            variant="contained"
-            fullWidth
-          >
-            Criar conta
-          </Button>
-        </FieldWrapper>
-        <FieldWrapper>
-          <Typography>
-            Já tem uma conta? Clique <a href={routes.auth.login}>aqui</a> para
-            logar
-          </Typography>
-        </FieldWrapper>
-      </ContentWrapper>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+        <ContentWrapper>
+          {errorMessage && (
+            <Box sx={{ py: "1rem", width: "100%" }}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Box>
+          )}
+          <FieldWrapper>
+            <ControlledTextField
+              control={control}
+              name="email"
+              label="E-mail"
+              errorMessage={errors?.email?.message}
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <ControlledTextField
+              control={control}
+              name="password"
+              label="Senha"
+              type="password"
+              errorMessage={errors?.password?.message}
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <ControlledTextField
+              control={control}
+              name="password_confirmation"
+              label="Confirmar senha"
+              type="password"
+              errorMessage={errors?.password_confirmation?.message}
+            />
+          </FieldWrapper>
+          <FieldWrapper>
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              type="submit"
+              variant="contained"
+              fullWidth
+            >
+              Criar conta
+            </Button>
+          </FieldWrapper>
+          <FieldWrapper>
+            <Typography>
+              Já tem uma conta? Clique <a href={routes.auth.login}>aqui</a> para
+              logar
+            </Typography>
+          </FieldWrapper>
+        </ContentWrapper>
+      </form>
     </PageContainer>
   );
 };
