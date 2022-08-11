@@ -19,7 +19,7 @@ import DialogWithActions from '../../components/Basics/DialogWithActions';
 import TaskForm from '../../components/PagesComponents/Dashboard/TaskForm';
 import DashboardNavbar from '../../components/PagesComponents/Navbar';
 import EnhancedTableHead, { HeadCell, Order } from '../../components/PagesComponents/TableHeader';
-import { Task } from '../../models/Task';
+import { Task } from '../../models/TaskModeel';
 import { TasksService } from '../../services/Task.service';
 import { showSnackbarAlert } from '../../store/slicers/snackbarAlert.slicer';
 import { responseStatus } from '../../utils/constants';
@@ -162,8 +162,8 @@ const Dashboard = () => {
                       <TableCell>{getFullDate(task.createdAt)}</TableCell>
                       <TableCell>{task.completed ? <CheckIcon /> : <CloseIcon />}</TableCell>
                       <TableCellFixed>
-                        <IconButton>
-                          <EditIcon onClick={() => handleFormOpen(task)} />
+                        <IconButton onClick={() => handleFormOpen(task)}>
+                          <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => handleDelete(task)}>
                           <DeleteIcon />

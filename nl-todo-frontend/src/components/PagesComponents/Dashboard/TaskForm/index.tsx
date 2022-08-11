@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AxiosResponse } from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Task } from '../../../../models/Task';
+import { Task } from '../../../../models/TaskModeel';
 import { TasksService } from '../../../../services/Task.service';
 import { showSnackbarAlert } from '../../../../store/slicers/snackbarAlert.slicer';
 import { responseStatus } from '../../../../utils/constants';
@@ -89,7 +89,6 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
                 label="Concluída"
                 name="completed"
                 defaultChecked={editionTask?.completed ? true : false}
-                errorMessage={errors.description?.message}
               />
             </Grid>
           </Grid>
