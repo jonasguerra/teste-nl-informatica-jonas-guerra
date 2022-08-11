@@ -1,16 +1,13 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import {
-  hideSpinner,
-  showSpinner,
-} from "../store/slicers/globalSpinner.slicer";
-import { store } from "../store/store";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { routes } from '../Routes/routes';
+import { hideSpinner, showSpinner } from '../store/slicers/globalSpinner.slicer';
+import { store } from '../store/store';
 
-import { localStorageKeys } from "../utils/constants";
+import { localStorageKeys } from '../utils/constants';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  validateStatus: (status) =>
-    [400, 401, 403, 404, 409, 422, 200, 201, 204, 304].includes(status),
+  validateStatus: (status) => [400, 401, 403, 404, 409, 422, 200, 201, 204, 304].includes(status),
 });
 
 const globalSpinnerShow = () => {
@@ -32,9 +29,8 @@ axiosInstance.interceptors.request.use(
     let authorization;
     try {
       authorization = localStorage.getItem(localStorageKeys.userToken);
-      console.log("token", authorization);
     } catch (e) {
-      console.log("Sem autorização", e);
+      console.log('Sem autorização', e);
     }
     if (authorization) {
       config.headers.Authorization = `Bearer ${authorization}`;
@@ -50,10 +46,10 @@ axiosInstance.interceptors.response.use(
   async (response: AxiosResponse) => {
     globalSpinnerHide();
     if (response.status === 401) {
-      console.log("Não Autorizado");
-      /*if (window.location.pathname !== routes.auth.login) {
+      console.log('Não Autorizado');
+      if (window.location.pathname !== routes.auth.login) {
         window.location.href = routes.auth.login;
-      }*/
+      }
     } else {
       return Promise.resolve(response);
     }
@@ -62,7 +58,7 @@ axiosInstance.interceptors.response.use(
     globalSpinnerHide();
     if (error.status === undefined) {
     } else {
-      console.log("API ERROR", error);
+      console.log('API ERROR', error);
     }
   }
 );
