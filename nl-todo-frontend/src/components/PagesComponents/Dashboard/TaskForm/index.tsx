@@ -36,7 +36,6 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
   const onSubmit: SubmitHandler<Task> = async (data: Task) => {
     let response: AxiosResponse | undefined;
     if (data?.id) {
-      data.createdAt = editionTask?.id && editionTask.createdAt;
       response = await TasksService.updateTask(data);
     } else {
       response = await TasksService.createTask(data);
