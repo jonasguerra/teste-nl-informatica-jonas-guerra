@@ -9,7 +9,7 @@ import { AxiosResponse } from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Task } from '../../../../models/Task';
-import { TasksService } from '../../../../services/Task';
+import { TasksService } from '../../../../services/Task.service';
 import { showSnackbarAlert } from '../../../../store/slicers/snackbarAlert.slicer';
 import { responseStatus } from '../../../../utils/constants';
 import { taskValidations } from '../../../../utils/form-validations';
