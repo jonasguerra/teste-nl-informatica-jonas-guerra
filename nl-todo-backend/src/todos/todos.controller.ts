@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -28,8 +27,8 @@ export class TodosController {
   }
 
   @Get()
-  findAll(@Body("userID", ParseIntPipe) userId: number) {
-    return this.todosService.findAll(userId);
+  findAll() {
+    return this.todosService.findAll();
   }
 
   @Get(":id")
