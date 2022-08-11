@@ -31,7 +31,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
   } = useForm<Task>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: editionTask?.id ? editionTask : new Task(),
+    defaultValues: editionTask?.id ? editionTask : {},
     resolver: yupResolver(taskValidations),
   });
 
@@ -101,6 +101,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
                 control={control}
                 label="Concluída"
                 name="completed"
+                defaultChecked={editionTask?.completed ? true : false}
                 errorMessage={errors.description?.message}
               />
             </Grid>

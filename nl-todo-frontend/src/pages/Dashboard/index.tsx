@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Button,
+  Card,
   IconButton,
   Table,
   TableBody,
@@ -150,54 +151,59 @@ const Dashboard = () => {
     <>
       <DashboardNavbar />
       <PageContainer>
-        <PageHeader>
-          <PageTitle>Suas notas</PageTitle>
-          <Button variant="contained" onClick={() => handleFormOpen()}>
-            Nova Nota
-          </Button>
-        </PageHeader>
-        {!loading && (
-          <TableContainer>
-            <Table>
-              <EnhancedTableHead
-                headCells={headCells}
-                order={order}
-                onRequestSort={() => {}}
+        <Card>
+          <PageHeader>
+            <PageTitle>Suas notas</PageTitle>
+            <Button variant="contained" onClick={() => handleFormOpen()}>
+              Nova Nota
+            </Button>
+          </PageHeader>
+          {!loading && (
+            <TableContainer>
+              <Table>
+                <EnhancedTableHead
+                  headCells={headCells}
+                  order={order}
+                  onRequestSort={() => {}}
+                />
+                <TableBody>
+                  {tasks
+                    ?.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                    .map((task: Task) => (
+                      <TableRow hover key={task.id}>
+                        <TableCell>{task.title}</TableCell>
+                        <TableCell>{task.description}</TableCell>
+                        <TableCell>{getFullDate(task.createdAt)}</TableCell>
+                        <TableCell>
+                          {task.completed ? <CheckIcon /> : <CloseIcon />}
+                        </TableCell>
+                        <TableCellFixed>
+                          <IconButton>
+                            <EditIcon onClick={() => handleFormOpen(task)} />
+                          </IconButton>
+                          <IconButton onClick={() => handleDelete(task)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </TableCellFixed>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, 50]}
+                component="div"
+                count={totalItems}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
               />
-              <TableBody>
-                {tasks
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((task: Task) => (
-                    <TableRow hover key={task.id}>
-                      <TableCell>{task.title}</TableCell>
-                      <TableCell>{task.description}</TableCell>
-                      <TableCell>{getFullDate(task.createdAt)}</TableCell>
-                      <TableCell>
-                        {task.completed ? <CheckIcon /> : <CloseIcon />}
-                      </TableCell>
-                      <TableCellFixed>
-                        <IconButton>
-                          <EditIcon onClick={() => handleFormOpen(task)} />
-                        </IconButton>
-                        <IconButton onClick={() => handleDelete(task)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </TableCellFixed>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              component="div"
-              count={totalItems}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableContainer>
-        )}
+            </TableContainer>
+          )}
+        </Card>
       </PageContainer>
       {showEditionForm && (
         <TaskForm

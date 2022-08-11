@@ -1,16 +1,7 @@
-export class Task {
+export interface Task {
   id?: string;
   title: string;
   description: string;
+  createdAt: string;
   completed: boolean;
-
-  constructor(
-    title: string = "",
-    description: string = " ",
-    completed: boolean = false
-  ) {
-    this.title = title;
-    this.description = description;
-    this.completed = completed;
-  }
 }

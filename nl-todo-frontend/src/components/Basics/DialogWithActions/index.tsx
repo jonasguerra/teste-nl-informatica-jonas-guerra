@@ -4,6 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Typography,
 } from "@mui/material";
 
 interface Props {
@@ -26,7 +27,11 @@ export default function DialogWithActions({
   return (
     <Dialog open={true} onClose={onCancel} fullWidth>
       <DialogTitle>{title}</DialogTitle>
-      {message && <DialogContent>{message}</DialogContent>}
+      {message && (
+        <DialogContent>
+          <Typography variant="body1">{message}</Typography>
+        </DialogContent>
+      )}
       <DialogActions>
         <Button variant="contained" onClick={onConfirm}>
           {confirmText}
