@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import Dashboard from "../pages/Dashboard";
-import Login from "../pages/Login";
-import SignUp from "../pages/SignUp";
-import { setUser } from "../store/slicers/user.slicer";
-import { RootState } from "../store/store";
-import { localStorageKeys } from "../utils/constants";
-import { routes } from "./routes";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import Dashboard from '../pages/Dashboard';
+import Login from '../pages/Login';
+import SignUp from '../pages/SignUp';
+import { setUser } from '../store/slicers/user.slicer';
+import { RootState } from '../store/store';
+import { localStorageKeys } from '../utils/constants';
+import { routes } from './routes';
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -15,8 +15,6 @@ const AppRoutes = () => {
 
   const dispatch = useDispatch();
   const userSelector = useSelector((state: RootState) => state.userStore.user);
-
-  console.log(userSelector);
 
   useEffect(() => {
     const token = localStorage.getItem(localStorageKeys.userToken);
@@ -27,9 +25,7 @@ const AppRoutes = () => {
 
   return (
     <>
-      {userSelector.token &&
-      location.pathname != routes.auth.login &&
-      location.pathname != routes.auth.signUp ? (
+      {userSelector.token && location.pathname != routes.auth.login && location.pathname != routes.auth.signUp ? (
         <Routes>
           <Route path={routes.root} element={<Dashboard />} />
           <Route path={routes.dashboard} element={<Dashboard />} />
