@@ -19,7 +19,7 @@ import DialogWithActions from '../../components/Basics/DialogWithActions';
 import TaskForm from '../../components/PagesComponents/Dashboard/TaskForm';
 import DashboardNavbar from '../../components/PagesComponents/Navbar';
 import EnhancedTableHead, { HeadCell, Order } from '../../components/PagesComponents/TableHeader';
-import { Task } from '../../models/TaskModeel';
+import { Task } from '../../models/Task';
 import { TasksService } from '../../services/Task.service';
 import { showSnackbarAlert } from '../../store/slicers/snackbarAlert.slicer';
 import { responseStatus } from '../../utils/constants';
