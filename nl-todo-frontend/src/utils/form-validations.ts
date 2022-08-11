@@ -18,8 +18,4 @@ export const signUpValidations = yup.object({
 
 export const taskValidations = yup.object({
   title: yup.string().required("Título é obrigatório"),
-  description: yup.string().required("Descrição é obrigatória"),
-  status: yup.string().required("Status é obrigatório"),
-  priority: yup.string().required("Prioridade é obrigatória"),
-  due_date: yup.string().required("Data de vencimento é obrigatória"),
 });

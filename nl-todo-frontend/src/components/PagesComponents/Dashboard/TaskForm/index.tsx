@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Divider, Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +12,7 @@ import { Task } from "../../../../models/Task";
 import { TasksService } from "../../../../services/Task.service";
 import { showSnackbarAlert } from "../../../../store/slicers/snackbarAlert.slicer";
 import { responseStatus } from "../../../../utils/constants";
+import { taskValidations } from "../../../../utils/form-validations";
 import ControlledCheckbox from "../../../Basics/ControlledCheckbox";
 import ControlledTextField from "../../../Basics/ControlledTextField";
 interface Props {
@@ -30,7 +32,7 @@ function TaskForm({ editionTask, formSubmit, formCancel }: Props) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: editionTask?.id ? editionTask : new Task(),
-    //resolver: yupResolver(taskValidations),
+    resolver: yupResolver(taskValidations),
   });
 
   const onSubmit: SubmitHandler<Task> = async (data: Task) => {
