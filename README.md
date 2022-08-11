@@ -1,4 +1,4 @@
-# teste-nl-informatica-jonas-guerra
+## teste-nl-informatica-jonas-guerra
  Sistema web desenvolvido como teste técnico para a NL informática
  
  Requisitos:
@@ -17,7 +17,7 @@
  - yarn start
  
 
-## Por padrão, todas as requests aparecem no console do navegador, é possível alterar esse comportamento modificando para "false" a variável "REACT_APP_SHOW_RESPONSES_IN_CONSOLE" no arquivo ".env" da pasta nl-todo-frontend.
+#### Por padrão, todas as requests aparecem no console do navegador, é possível alterar esse comportamento modificando para "false" a variável "REACT_APP_SHOW_RESPONSES_IN_CONSOLE" no arquivo ".env" da pasta nl-todo-frontend.
 
 
 Tecnologias utilizadas no backend:
